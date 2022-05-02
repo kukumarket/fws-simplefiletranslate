@@ -1,4 +1,6 @@
 import platform
+import socket
+from datetime import datetime
 print("FWS© kuku2012")
 print("您好。")
 print("您正在运行的软件是 Simple File Translate Server 服务器端")
@@ -6,3 +8,26 @@ print("您的系统为:"+platform.system())
 print("您的平台为:"+platform.platform())
 print("您的设备类型为:"+platform.machine())
 print("您的处理器架构为:"+platform.processor())
+print("目前固定绑定9680端口.")
+BIND_IP="0.0.0.0"
+BIND_PORT=9680
+
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+server.bind(('localhost',BIND_PORT)) #绑定要监听的端口
+server.listen(5) #开始监听 表示可以使用五个链接排队
+while True:# conn就是客户端链接过来而在服务端为期生成的一个链接实例
+    conn,addr = server.accept() #等待链接,多个链接的时候就会出现问题,其实返回了两个值
+    print(conn,addr)
+    while True:
+        try:
+            data = conn.recv(1024)  #接收数据
+            print('recive:',data.decode())
+            #print('{}'.format(time.strftime("%Y-%m-%d %H:%M:%S")))
+            print(datetime.now())
+            # conn.send(data.upper()) #然后再发送数据
+            # conn.close()
+            # break
+        except ConnectionResetError as e:
+            print('关闭了正在占线的链接！')
+            break
+    conn.close()
