@@ -16,7 +16,7 @@ client.connect((BIND_IP,BIND_PORT)) #建立一个链接，连接到本地的6969
 # addr = client.accept()
 # print '连接地址：', addr
 
-msg = 'quit'
+msg = 'dir'
 client.send(msg.encode('utf-8'))  #发送一条信息 python3 只接收byte流
 data = client.recv(1024) #接收一个信息，并指定接收的大小 为1024字节
 print('recv:',data.decode()) #输出我接收的信息
